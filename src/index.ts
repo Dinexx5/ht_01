@@ -72,7 +72,7 @@ app.post('/videos', (req: Request, res: Response) => {
     if (!title || typeof title !== 'string' || title.length > 40 || !title.trim()) {
         errorsMessages.push({
             message: "Title incorrect",
-            field: title
+            field: "title"
         })
 
 
@@ -81,7 +81,7 @@ app.post('/videos', (req: Request, res: Response) => {
     if (!author || typeof author !== 'string' || author.length > 20 || !author.trim()) {
         errorsMessages.push({
             message: "Author incorrect",
-            field: author
+            field: "author"
         })
 
 
@@ -143,7 +143,7 @@ app.put('/videos/:id', (req: Request, res: Response) => {
     if (!title || typeof title !== 'string' || title.length > 40 || !title.trim()) {
         errorsMessages.push({
             message: "Title incorrect",
-            field: title
+            field: "title"
         })
 
 
@@ -152,7 +152,7 @@ app.put('/videos/:id', (req: Request, res: Response) => {
     if (!author || typeof author !== 'string' || author.length > 20 || !author.trim()) {
         errorsMessages.push({
             message: "Author incorrect",
-            field: author
+            field: "author"
         })
 
 
@@ -161,7 +161,7 @@ app.put('/videos/:id', (req: Request, res: Response) => {
         if (typeof canBeDownloaded !== 'boolean') {
             errorsMessages.push({
                 message: "canBeDownloaded incorrect",
-                field: canBeDownloaded
+                field: "canBeDownloaded"
             })
         }
         foundVideo.canBeDownloaded = canBeDownloaded
@@ -171,7 +171,7 @@ app.put('/videos/:id', (req: Request, res: Response) => {
         if (typeof minAgeRestriction !== 'number' || minAgeRestriction > 18 || minAgeRestriction < 1) {
             errorsMessages.push({
                 message: "minAgeRestriction incorrect",
-                field: minAgeRestriction
+                field: "minAgeRestriction"
             })
         }
         foundVideo.minAgeRestriction = minAgeRestriction
@@ -181,7 +181,7 @@ app.put('/videos/:id', (req: Request, res: Response) => {
         if (typeof publicationDate !== 'string') {
             errorsMessages.push({
                 message: "publicationDate incorrect",
-                field: publicationDate
+                field: "publicationDate"
             })
         }
         foundVideo.publicationDate = publicationDate
@@ -197,7 +197,7 @@ app.put('/videos/:id', (req: Request, res: Response) => {
     foundVideo.title = title
     foundVideo.author = author
 
-    res.status(201).send(foundVideo)
+    res.status(204).send(foundVideo)
 
 
 })

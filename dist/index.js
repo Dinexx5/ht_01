@@ -60,13 +60,13 @@ app.post('/videos', (req, res) => {
     if (!title || typeof title !== 'string' || title.length > 40 || !title.trim()) {
         errorsMessages.push({
             message: "Title incorrect",
-            field: title
+            field: "title"
         });
     }
     if (!author || typeof author !== 'string' || author.length > 20 || !author.trim()) {
         errorsMessages.push({
             message: "Author incorrect",
-            field: author
+            field: "author"
         });
     }
     if (errorsMessages.length) {
@@ -114,20 +114,20 @@ app.put('/videos/:id', (req, res) => {
     if (!title || typeof title !== 'string' || title.length > 40 || !title.trim()) {
         errorsMessages.push({
             message: "Title incorrect",
-            field: title
+            field: "title"
         });
     }
     if (!author || typeof author !== 'string' || author.length > 20 || !author.trim()) {
         errorsMessages.push({
             message: "Author incorrect",
-            field: author
+            field: "author"
         });
     }
     if (canBeDownloaded) {
         if (typeof canBeDownloaded !== 'boolean') {
             errorsMessages.push({
                 message: "canBeDownloaded incorrect",
-                field: canBeDownloaded
+                field: "canBeDownloaded"
             });
         }
         foundVideo.canBeDownloaded = canBeDownloaded;
@@ -136,7 +136,7 @@ app.put('/videos/:id', (req, res) => {
         if (typeof minAgeRestriction !== 'number' || minAgeRestriction > 18 || minAgeRestriction < 1) {
             errorsMessages.push({
                 message: "minAgeRestriction incorrect",
-                field: minAgeRestriction
+                field: "minAgeRestriction"
             });
         }
         foundVideo.minAgeRestriction = minAgeRestriction;
@@ -145,7 +145,7 @@ app.put('/videos/:id', (req, res) => {
         if (typeof publicationDate !== 'string') {
             errorsMessages.push({
                 message: "publicationDate incorrect",
-                field: publicationDate
+                field: "publicationDate"
             });
         }
         foundVideo.publicationDate = publicationDate;
@@ -155,7 +155,7 @@ app.put('/videos/:id', (req, res) => {
     }
     foundVideo.title = title;
     foundVideo.author = author;
-    res.status(201).send(foundVideo);
+    res.status(204).send(foundVideo);
 });
 app.delete('/videos/:id', (req, res) => {
     for (let i = 0; i < videos.length; i++) {
