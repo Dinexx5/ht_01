@@ -24,6 +24,10 @@ tomorrow.setDate(today.getDate() + 1);
 // }
 const parserMiddleware = (0, body_parser_1.default)({});
 app.use(parserMiddleware);
+app.delete('/testing/all-data', (req, res) => {
+    videos = [];
+    res.send(204);
+});
 app.get('/videos', (req, res) => {
     res.status(200).send(videos);
 });

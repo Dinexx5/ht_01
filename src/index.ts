@@ -26,6 +26,10 @@ tomorrow.setDate(today.getDate()+ 1)
 const parserMiddleware = bodyParser({})
 app.use(parserMiddleware)
 
+app.delete('/testing/all-data', (req: Request, res: Response) => {
+    videos = []
+    res.send(204)
+})
 
 app.get('/videos', (req: Request, res: Response) => {
     res.status(200).send(videos)
