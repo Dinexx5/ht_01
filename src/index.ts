@@ -11,17 +11,6 @@ const today = new Date()
 const tomorrow = new Date()
 tomorrow.setDate(today.getDate()+ 1)
 
-// interface IVideo {
-//     id: number,
-//     title: string,
-//     author: string,
-//     canBeDownloaded: boolean,
-//     minAgeRestriction: null | number,
-//     createdAt: string,
-//     publicationDate: string,
-//     availableResolutions: string[] | null,
-// }
-
 
 const parserMiddleware = bodyParser({})
 app.use(parserMiddleware)
@@ -71,15 +60,11 @@ app.post('/videos', (req: Request, res: Response) => {
         }
     }
 
-
-
     if (!title || typeof title !== 'string' || title.length > 40 || !title.trim()) {
         errorsMessages.push({
             message: "Title incorrect",
             field: "title"
         })
-
-
     }
 
     if (!author || typeof author !== 'string' || author.length > 20 || !author.trim()) {
@@ -87,12 +72,12 @@ app.post('/videos', (req: Request, res: Response) => {
             message: "Author incorrect",
             field: "author"
         })
-
-
     }
+
     if (errorsMessages.length) {
         res.status(400).send({'errorsMessages':errorsMessages})
     }
+
     const newVideo  = {
         id: videos.length,
         title: title,
@@ -103,7 +88,9 @@ app.post('/videos', (req: Request, res: Response) => {
         publicationDate: publicationDate || tomorrow.toISOString(),
         availableResolutions: availableResolutions || null,
     }
+
     videos.push(newVideo)
+
     res.status(201).send(newVideo)
 })
 
@@ -127,7 +114,6 @@ app.put('/videos/:id', (req: Request, res: Response) => {
                     field: "availableResolutions"
                 })
             }
-
         })
     }
 
@@ -141,16 +127,11 @@ app.put('/videos/:id', (req: Request, res: Response) => {
         foundVideo.availableResolutions = availableResolutions
     }
 
-
-
-
     if (!title || typeof title !== 'string' || title.length > 40 || !title.trim()) {
         errorsMessages.push({
             message: "Title incorrect",
             field: "title"
         })
-
-
     }
 
     if (!author || typeof author !== 'string' || author.length > 20 || !author.trim()) {
@@ -159,8 +140,8 @@ app.put('/videos/:id', (req: Request, res: Response) => {
             field: "author"
         })
 
-
     }
+
     if (canBeDownloaded) {
         if (typeof canBeDownloaded !== 'boolean') {
             errorsMessages.push({
@@ -191,12 +172,9 @@ app.put('/videos/:id', (req: Request, res: Response) => {
         foundVideo.publicationDate = publicationDate
     }
 
-
-
     if (errorsMessages.length) {
         res.status(400).send({'errorsMessages':errorsMessages})
     }
-
 
     foundVideo.title = title
     foundVideo.author = author

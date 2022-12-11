@@ -12,16 +12,6 @@ let videos = [];
 const today = new Date();
 const tomorrow = new Date();
 tomorrow.setDate(today.getDate() + 1);
-// interface IVideo {
-//     id: number,
-//     title: string,
-//     author: string,
-//     canBeDownloaded: boolean,
-//     minAgeRestriction: null | number,
-//     createdAt: string,
-//     publicationDate: string,
-//     availableResolutions: string[] | null,
-// }
 const parserMiddleware = (0, body_parser_1.default)({});
 app.use(parserMiddleware);
 app.delete('/testing/all-data', (req, res) => {
