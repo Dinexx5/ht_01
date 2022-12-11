@@ -1,6 +1,6 @@
 import express, {Request, Response} from 'express'
 import bodyParser from "body-parser";
-const app = express()
+export const app = express()
 const port = 3001
 
 const availableResolutionsArr: string[] = ["P144", "P240", "P360", "P480", "P720", "P1080", "P1440", "P2160"]
@@ -15,10 +15,12 @@ tomorrow.setDate(today.getDate()+ 1)
 const parserMiddleware = bodyParser({})
 app.use(parserMiddleware)
 
+//testing purposes
 app.delete('/testing/all-data', (req: Request, res: Response) => {
     videos = []
     res.send(204)
 })
+
 
 app.get('/videos', (req: Request, res: Response) => {
     res.status(200).send(videos)
@@ -76,6 +78,7 @@ app.post('/videos', (req: Request, res: Response) => {
 
     if (errorsMessages.length) {
         res.status(400).send({'errorsMessages':errorsMessages})
+        return
     }
 
     const newVideo  = {
@@ -104,6 +107,7 @@ app.put('/videos/:id', (req: Request, res: Response) => {
 
     if (!foundVideo) {
         res.send(404)
+
     }
 
     if (availableResolutions && Array.isArray(availableResolutions)) {
@@ -117,14 +121,14 @@ app.put('/videos/:id', (req: Request, res: Response) => {
         })
     }
 
-    if(availableResolutions) {
+    if (availableResolutions) {
         if (!Array.isArray(availableResolutions) || availableResolutions.length > availableResolutionsArr.length || availableResolutions.length === 0) {
             errorsMessages.push({
                 message: "Incorrect resolutions provided",
                 field: "availableResolutions"
             })
         }
-        foundVideo.availableResolutions = availableResolutions
+
     }
 
     if (!title || typeof title !== 'string' || title.length > 40 || !title.trim()) {
@@ -139,7 +143,6 @@ app.put('/videos/:id', (req: Request, res: Response) => {
             message: "Author incorrect",
             field: "author"
         })
-
     }
 
     if (canBeDownloaded) {
@@ -149,7 +152,6 @@ app.put('/videos/:id', (req: Request, res: Response) => {
                 field: "canBeDownloaded"
             })
         }
-        foundVideo.canBeDownloaded = canBeDownloaded
     }
 
     if (minAgeRestriction) {
@@ -159,7 +161,6 @@ app.put('/videos/:id', (req: Request, res: Response) => {
                 field: "minAgeRestriction"
             })
         }
-        foundVideo.minAgeRestriction = minAgeRestriction
     }
 
     if (publicationDate){
@@ -169,15 +170,29 @@ app.put('/videos/:id', (req: Request, res: Response) => {
                 field: "publicationDate"
             })
         }
-        foundVideo.publicationDate = publicationDate
     }
 
     if (errorsMessages.length) {
         res.status(400).send({'errorsMessages':errorsMessages})
+        return
     }
 
+    if (canBeDownloaded) {
+        foundVideo.canBeDownloaded = canBeDownloaded
+    }
+    if (minAgeRestriction) {
+        foundVideo.minAgeRestriction = minAgeRestriction
+    }
+    if (publicationDate) {
+        foundVideo.publicationDate = publicationDate
+    }
+    if (availableResolutions) {
+        foundVideo.availableResolutions = availableResolutions
+    }
     foundVideo.title = title
     foundVideo.author = author
+
+
 
     res.status(204).send(foundVideo)
 
